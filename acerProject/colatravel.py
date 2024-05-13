@@ -1,3 +1,4 @@
+import pandas as pd
 import requests
 from bs4 import BeautifulSoup as bs
 from selenium import webdriver
@@ -67,7 +68,7 @@ def domestic_traveling_plan_url(object, date = str(current_datetime.year)+'/'+st
         object.find_element(By.ID, 'noTourData')
         
     except:
-        
+        print('No Tour Data')
         return 
     
     while controler:
@@ -156,107 +157,228 @@ def get_one_info(url):
     waiting = soup.find('div', {'id': 'mdataInfo-dateDetail'}).find('span').find_all('span')[2].text.split(' ')[1]
     info_dict['waitingList'] = waiting
     
-   
-    go_date = soup.find('ul', {'class': 'flightR-go'}).find_all('div')[0].text.lstrip().rstrip()
-    info_dict['go_date'] = go_date
-    
-    go_company = soup.find('ul', {'class': 'flightR-go'}).find_all('div')[1].find_all('span')[0].text
-    info_dict['go_company'] = go_company
-    
-    go_flightNo = soup.find('ul', {'class': 'flightR-go'}).find_all('div')[1].find_all('span')[1].text
-    info_dict['go_flightNo'] = go_flightNo
-    
-    go_departure_time = soup.find('ul', {'class': 'flightR-go'}).find_all('div')[2].find_all('span')[0].text
-    info_dict['go_departure_time'] = go_departure_time
-    
-    go_departure_city = soup.find('ul', {'class': 'flightR-go'}).find_all('div')[2].find_all('span')[1].text
-    info_dict['go_departure_city'] = go_departure_city
-    
-    go_arrive_time = soup.find('ul', {'class': 'flightR-go'}).find_all('div')[3].find_all('span')[0].text
-    info_dict['go_arrive_time'] = go_arrive_time
-    
-    go_arrive_city = soup.find('ul', {'class': 'flightR-go'}).find_all('div')[3].find_all('span')[1].text
-    info_dict['go_arrive_city'] = go_arrive_city
-    
-    back_date = soup.find('ul', {'class': 'flightR-back'}).find_all('div')[0].text.lstrip().rstrip()
-    info_dict['back_date'] = back_date
-    
-    back_company = soup.find('ul', {'class': 'flightR-back'}).find_all('div')[1].find_all('span')[0].text
-    info_dict['back_company'] = back_company
-   
-    back_flightNo = soup.find('ul', {'class': 'flightR-back'}).find_all('div')[1].find_all('span')[1].text
-    info_dict['back_flightNo'] = back_flightNo
-    
-    back_departure_time = soup.find('ul', {'class': 'flightR-back'}).find_all('div')[2].find_all('span')[0].text
-    info_dict['back_departure_time'] = back_departure_time
-    
-    back_departure_city = soup.find('ul', {'class': 'flightR-back'}).find_all('div')[2].find_all('span')[1].text
-    info_dict['back_departure_city'] = back_departure_city
-    
-    back_arrive_time = soup.find('ul', {'class': 'flightR-back'}).find_all('div')[3].find_all('span')[0].text
-    info_dict['back_arrive_time'] = back_arrive_time
-    
-    back_arrive_city = soup.find('ul', {'class': 'flightR-back'}).find_all('div')[3].find_all('span')[1].text
-    info_dict['back_arrive_city'] = back_arrive_city
-    
-    content_area = soup.find('div', {'class':'wrap_itinerary touriti-highli'})
-    
-    temp_container = content_area.find_all('div', {'class':'touriti-highliTitle'})
-    
-    content_titles = [i.text.replace('\n', '') for i in temp_container]
-    
-    hotel_info = []
-    
-    if "住宿說明" in content_titles:
+    try:
         
-        hotel_info_area = content_area.find_all('div', {'class':'touriti-highliBox'})[content_titles.index('住宿說明')].find('div', {'class':'touriti-highliContent'})
+        soup.find('div', {'class': 'touriti-flightOut'}).find('div', {'class':'ui-title'})
         
-        for i in hotel_info_area.find_all('li'):
-            temp_dict = {}
-            hotel_name = i.text.split('：')[0]
-            hotel_description = i.text.split('：')[1].split('\n')[0]
-            temp_dict[hotel_name] = hotel_description
-            hotel_info.append(temp_dict)
+        go_date = soup.find('ul', {'class': 'flightR-go'}).find_all('div')[0].text.lstrip().rstrip()
+        info_dict['go_date'] = go_date
         
-    info_dict['hotel_info'] = hotel_info
+        go_company = soup.find('ul', {'class': 'flightR-go'}).find_all('div')[1].find_all('span')[0].text
+        info_dict['go_company'] = go_company
+        
+        go_flightNo = soup.find('ul', {'class': 'flightR-go'}).find_all('div')[1].find_all('span')[1].text
+        info_dict['go_flightNo'] = go_flightNo
+        
+        go_departure_time = soup.find('ul', {'class': 'flightR-go'}).find_all('div')[2].find_all('span')[0].text
+        info_dict['go_departure_time'] = go_departure_time
+        
+        go_departure_city = soup.find('ul', {'class': 'flightR-go'}).find_all('div')[2].find_all('span')[1].text
+        info_dict['go_departure_city'] = go_departure_city
+        
+        go_arrive_time = soup.find('ul', {'class': 'flightR-go'}).find_all('div')[3].find_all('span')[0].text
+        info_dict['go_arrive_time'] = go_arrive_time
+        
+        go_arrive_city = soup.find('ul', {'class': 'flightR-go'}).find_all('div')[3].find_all('span')[1].text
+        info_dict['go_arrive_city'] = go_arrive_city
+        
+        back_date = soup.find('ul', {'class': 'flightR-back'}).find_all('div')[0].text.lstrip().rstrip()
+        info_dict['back_date'] = back_date
+        
+        back_company = soup.find('ul', {'class': 'flightR-back'}).find_all('div')[1].find_all('span')[0].text
+        info_dict['back_company'] = back_company
+       
+        back_flightNo = soup.find('ul', {'class': 'flightR-back'}).find_all('div')[1].find_all('span')[1].text
+        info_dict['back_flightNo'] = back_flightNo
+        
+        back_departure_time = soup.find('ul', {'class': 'flightR-back'}).find_all('div')[2].find_all('span')[0].text
+        info_dict['back_departure_time'] = back_departure_time
+        
+        back_departure_city = soup.find('ul', {'class': 'flightR-back'}).find_all('div')[2].find_all('span')[1].text
+        info_dict['back_departure_city'] = back_departure_city
+        
+        back_arrive_time = soup.find('ul', {'class': 'flightR-back'}).find_all('div')[3].find_all('span')[0].text
+        info_dict['back_arrive_time'] = back_arrive_time
+        
+        back_arrive_city = soup.find('ul', {'class': 'flightR-back'}).find_all('div')[3].find_all('span')[1].text
+        info_dict['back_arrive_city'] = back_arrive_city
     
-    tour_timetable = []
-    
-    for i in soup.find_all('div', {'class':'touriti-dlineTitle'}):
+    except:
         
-        temp_dict = {}
-        temp_list = []
-        day = i.find('div', {'class':'dlineTitle-day'}).text.replace("\n", ' ').lstrip().replace(' ', ":")
-        for j in i.find('div', {'class':'dlineTitle-place'}).find_all('p'):
+        info_dict['go_date'] = ""
+        
+        info_dict['go_company'] = ""
+        
+        info_dict['go_flightNo'] = ""
+        
+        info_dict['go_departure_time'] = ""
+        
+        info_dict['go_departure_city'] = ""
+        
+        info_dict['go_arrive_time'] = ""
+        
+        info_dict['go_arrive_city'] = ""
+        
+        info_dict['back_date'] = ""
+        
+        info_dict['back_company'] = ""
+       
+        info_dict['back_flightNo'] = ""
+        
+        info_dict['back_departure_time'] = ""
+        
+        info_dict['back_departure_city'] = ""
+        
+        info_dict['back_arrive_time'] = ""
+        
+        info_dict['back_arrive_city'] = ""
+    
+    
+    if re.compile('自由行').search(title) != None:
+        
+        info_dict['type'] = "自由行"
+        
+    else:
+        
+        info_dict['type'] = "套裝行程"
+        
+    tour_schedual= {}
+    
+    for i in soup.find_all('div', {'class':'touriti-dlineBox'}):
+         
+        place_List = []
+        
+        hotel_List = []
+        
+        day = i.find('div', {'class': 'dlineTitle-day'}).text.replace('\n',' ').lstrip()
+        
+        for p in i.find('div', {'class': 'dlineTitle-place'}).find_all('p'):
             
-            temp_list.append(j.text)
+            place_List.append(p.text)
         
-        temp_dict[day] = temp_list
+        for h in i.find('div', {'class': 'dlineContent-hotel'}).find('ul').find_all('li'):
+            
+            hotel_List.append(h.text)
         
-        tour_timetable.append(temp_dict)
         
-    info_dict['tour_timetable'] = tour_timetable
+        tour_schedual[day] = {'schedual': place_List, 'posible_hotel': hotel_List}
+    
+    info_dict['tour_schedual'] = tour_schedual
     
     return info_dict
 
 def get_all_plans_info():
+    
+    title_List = []
+    date_List= []
+    departure_city_List = []
+    duration_List = []
+    price_List = []
+    group_quota_List = []
+    remaining_quota_List = []
+    waiting_List = []
+    
+    go_date_List = []
+    go_company_List = []
+    go_flightNo_List = []
+    go_departure_time_List = []
+    go_departure_city_List = []
+    go_arrive_time_List = []
+    go_arrive_city_List = []
+    
+    back_date_List = []
+    back_company_List = []
+    back_flightNo_List = []
+    back_departure_time_List = []
+    back_departure_city_List = []
+    back_arrive_time_List = []
+    back_arrive_city_List = []
+    
+    tour_schedual_List = []
+    tour_type_List = []
+    
     urlList = import_url()
     
-    for url in urlList:
-        
-        trip_info = get_one_info(url)
-    
-        break
-    
+    try:
 
+        for index, url in enumerate(urlList):
+            
+            print(index + 1)
+            
+            try:
+                info = get_one_info(url)
+            
+            except Exception as error:
+                
+                print(index+1)
+                print(error)
+                return 
+            
+            title_List.append(info['title'])
+            date_List.append(info['date'])
+            departure_city_List.append(info['departure_city'])
+            duration_List.append(info['duration'])
+            price_List.append(info['price'])
+            group_quota_List.append(info['group_quota'])
+            remaining_quota_List.append(info['remaining_quota'])
+            waiting_List.append(info['waitingList'])
+            
+            go_date_List.append(info['go_date'])
+            go_company_List.append(info['go_company'])
+            go_flightNo_List.append(info['go_flightNo'])
+            go_departure_time_List.append(info['go_departure_time'])
+            go_departure_city_List.append(info['go_departure_city'])
+            go_arrive_time_List.append(info['go_arrive_time'])
+            go_arrive_city_List.append(info['go_arrive_city'])
+            
+            back_date_List.append(info['back_date'])
+            back_company_List.append(info['back_company'])
+            back_flightNo_List.append(info['back_flightNo'])
+            back_departure_time_List.append(info['back_departure_time'])
+            back_departure_city_List.append(info['back_departure_city'])
+            back_arrive_time_List.append(info['back_arrive_time'])
+            back_arrive_city_List.append(info['back_arrive_city'])
+            tour_schedual_List.append(info['tour_schedual'])
+            tour_type_List.append(info['type'])
+            
+            time.sleep(3)
     
+    finally:
+        
+        all_info = pd.DataFrame({'title':title_List,
+                                 'date':date_List,
+                                 'departure_city':departure_city_List,
+                                 'duration':duration_List,
+                                 'price':price_List,
+                                 'type':tour_type_List,
+                                 'group_quota':group_quota_List,
+                                 'remaining_quota':remaining_quota_List,
+                                 'waiting_List':waiting_List,
+                                 'go_date':go_date_List,
+                                 'go_company':go_company_List,
+                                 'go_flightNo':go_flightNo_List,
+                                 'go_departure_time':go_departure_time_List,
+                                 'go_departure_city':go_departure_city_List,
+                                 'go_arrive_time':go_arrive_time_List,
+                                 'go_arrive_city':go_arrive_city_List,
+                                 'back_date':back_date_List,
+                                 'back_company':back_company_List,
+                                 'back_flightNo':back_flightNo_List,
+                                 'back_departure_time':back_departure_time_List,
+                                 'back_departure_city':back_departure_city_List,
+                                 'back_arrive_time':back_arrive_time_List,
+                                 'back_arrive_city':back_arrive_city_List,
+                                 'tour_schedual': tour_schedual_List})
+        
+        all_info.to_csv('DomesticTravelInfo.csv', encoding="UTF8")
+    
+        return all_info
+
 # driver = init_driver(headless=True)
 # urls = domestic_traveling_plan_url(driver)
 # driver.quit()
 
-
-
-
-
-
+info = get_all_plans_info()
+# urlList = import_url()
+# info_dict = get_one_info(urlList[2])
     

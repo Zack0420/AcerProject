@@ -855,6 +855,7 @@ def get_all_plans_info(urlList):
         all_info.to_csv('DomesticTravelInfo.csv', encoding="UTF8")
     
     return all_info
+
 links = group_travel_search()
 info = get_all_plans_info(links)
 

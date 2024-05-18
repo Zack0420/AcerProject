@@ -23,7 +23,7 @@ import requests
 import re
 
 # search = input("請輸入查詢地點:")
-# search = '台灣' #查詢地點:
+search = '台北市' #查詢地點:
     
 # departure time1 = input("請輸入查詢日期區間:")
 # departure time2 = input("請輸入查詢日期區間:")
@@ -40,6 +40,7 @@ UrlList = [] #網址
 inside_titleList = [] #總共標題數
 inside_urlList = [] #網址
 
+trip_typeList = [] #旅遊類型查詢
 priceList = [] #價錢
 title_priceList = [] #外網址價錢
 
@@ -72,7 +73,9 @@ checkDateFlag = True
 # browser = webdriver.Chrome(options=chrome_options) #無頭模式
 browser = webdriver.Chrome()
 
-browser.get("https://travel.liontravel.com/search?DepartureID=&ArriveID=&GoDateStart="+departure_time1+"&GoDateEnd="+departure_time2+"&Keywords=") #抓取雄獅旅遊的網站
+# browser.get("https://travel.liontravel.com/search?DepartureID=&ArriveID=&GoDateStart="+departure_time1+"&GoDateEnd="+departure_time2+"&Keywords=") #抓取雄獅旅遊的網站
+browser.get("https://travel.liontravel.com/search?DepartureID=&ArriveID=&GoDateStart="+departure_time1+"&GoDateEnd="+departure_time2+"&Keywords="+search) #抓取雄獅旅遊的網站
+#https://travel.liontravel.com/search?DepartureID=&ArriveID=&GoDateStart=2024-05-17&GoDateEnd=2024-07-16&Keywords=&Platform=APP
 browser.maximize_window()
 print(browser.current_url)
 
@@ -140,7 +143,7 @@ try:
                 except:
                     WebDriverWait(browser,20, 0.1).until(EC.visibility_of_element_located(inside_locator))  #以列表顯示
                 #顯示共幾天
-                WebDriverWait(browser, 10, 0.1).until(EC.visibility_of_all_elements_located(title_locator)) #以標題定位
+                WebDriverWait(browser, 10, 0.1).until(EC.visibility_of_all_elements_located(title_locator)) #以標題定位                
                 datecount = browser.find_element(By.CLASS_NAME,'days--3UNv4') #共幾天
                 print(datecount.text)
                 
@@ -175,8 +178,9 @@ try:
                             totalsell = ati.find_elements(By.XPATH,'section[2]/div/div[8]') #總席次o
                             trip_state = ati.find_elements(By.XPATH,'section[2]/div/div[5]') #報名狀態o
                             price = ati.find_elements(By.XPATH,'section[2]/div/div[9]') #價格o
+                            tripType = browser.find_element(By.XPATH,'//*[@id="root"]/div/div[4]/div/div[1]/div[1]/img').get_attribute("alt") #旅遊類型查詢
                             
-                            
+                                        
                             
                             # try:
                             #     count = 1
@@ -198,6 +202,8 @@ try:
                                 print(UrlList[time]) 
                                 inside_urlList.append(UrlList[time])#連結
                                 
+                                print(tripType)
+                                trip_typeList.append(tripType)#旅遊類型查詢
                                 #旅館資訊 
                                 try:
                                     hotel_info = browser.find_elements(By.XPATH, '//*[@id="schedules"]/div[2]/div/div/div[3]/div[2]/div/span')
@@ -268,6 +274,7 @@ try:
                         print("查無出發日=====all_trip_info2")
                         inside_titleList.append(titleList[time])
                         inside_urlList.append(UrlList[time])
+                        trip_typeList.append("無資料")
                         departure_DateList.append("無資料")
                         tripDateList.append("無資料") #遊玩天數
                         trip_numList.append("無資料") #行程編號
@@ -284,6 +291,7 @@ try:
                     print("查無網站")
                     inside_titleList.append(titleList[time])
                     inside_urlList.append(UrlList[time])
+                    trip_typeList.append("查無網站")
                     departure_DateList.append("查無網站")
                     tripDateList.append("查無網站") #遊玩天數
                     trip_numList.append("查無網站") #行程編號
@@ -313,6 +321,7 @@ finally:
 data = pd.DataFrame({"旅遊公司名稱":typeList,
                      "標題:":inside_titleList,
                      "網址":inside_urlList,
+                     "旅遊類別":trip_typeList,
                      "出發日期":departure_DateList,
                      "#行程編號:行程1":trip_numList,
                      "成團狀況(團位)":tripGroupState1,
@@ -324,7 +333,7 @@ data = pd.DataFrame({"旅遊公司名稱":typeList,
                      "總天數":tripDateList,
                      "價格":priceList,
                      "住宿點":hotelList})
-data.to_csv("旅遊搜尋_全部.csv",encoding="utf-8")
+data.to_csv("liontrip_0518_final.csv",encoding="utf-8")
 
 
 

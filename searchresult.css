@@ -115,7 +115,7 @@ input[type="range"]::-moz-range-thumb {
 footer {
     background-color: #333; /* 背景顏色 */
     color: white; /* 字體顏色 */
-    padding: 20px 0; /* 上下內邊距 */
+    padding: 1px 0; /* 上下內邊距 */
 }
 
 /* 設定頁尾容器的樣式 */
@@ -133,7 +133,7 @@ footer .box {
 
 /* 設定頁尾標題的底部外邊距 */
 footer .box h3 {
-    margin-bottom: 15px;
+    margin-bottom: 5px;
 }
 
 /* 設定頁尾連結列表的樣式 */

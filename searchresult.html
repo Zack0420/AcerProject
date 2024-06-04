@@ -4,17 +4,14 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>宏碁碁</title>
-    <!-- 引入 Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- 引入自定義 CSS -->
     <link rel="stylesheet" href="searchresult.css">
 </head>
 <body>
-    <!-- 導航欄 -->
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">
-                <img src="https://i.pinimg.com/564x/e2/78/e4/e278e4e41ce6eba458deb27d36aeba36.jpg" alt="宏碁碁旅遊" width="50" height="50">
+                <img src="https://i.pinimg.com/564x/e2/78/e4/e278e4e41ce6eba458deb27d36aeba36.jpg" alt="宏碁碁旅遊" width="50" height="50"> 
                 宏碁碁旅遊
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -44,12 +41,10 @@
                         <a class="nav-link" href="#">會員中心</a></li>
                 </ul>
                 <div class="d-flex">
-                    <!-- 搜索框 -->
                     <form class="d-flex me-2" role="search">
                         <input class="form-control me-2" type="search" placeholder="關鍵字搜尋:日本自由行" aria-label="Search">
                         <button class="btn btn-outline-success" type="submit">Search</button>
                     </form>
-                    <!-- 登錄按鈕 -->
                     <form class="d-flex ms-4">
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                             Sign In
@@ -59,13 +54,11 @@
             </div>
         </div>
     </nav>
-    <!-- 主要內容區域 -->
     <main>
         <br>
         <br>
         <div class="container-fluid">
             <div class="row">
-                <!-- 篩選選項 -->
                 <div class="col-md-2">
                     <h5>篩選選項</h5>
                     <div class="filter-options">
@@ -101,51 +94,69 @@
                     </div>
                     <button class="btn btn-primary mt-3" onclick="searchItinerary()">搜尋行程</button>
                 </div>
-                <!-- 搜尋結果 -->
                 <div class="col-md-10">
                     <h5>搜尋結果</h5>
-                    <div class="search-results">
-                        <div class="search-result-item">
-                            <input type="checkbox" class="form-check-input" id="result1">
-                            <label class="form-check-label" for="result1">【暢遊首爾】韓服遊古宮、最美星巴克、高速巴士地下街、海洋列車4日</label>
+                    <div class="accordion" id="accordionExample">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingOne">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                    <input type="checkbox" class="form-check-input me-2" id="compare1" value="【暢遊首爾】韓服遊古宮、最美星巴克、高速巴士地下街、海洋列車4日">
+                                    【暢遊首爾】韓服遊古宮、最美星巴克、高速巴士地下街、海洋列車4日
+                                </button>
+                            </h2>
+                            <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne">
+                                <div class="accordion-body">
+                                    <strong>行程詳情：</strong> 放內容。
+                                    <button class="btn btn-secondary mt-3" onclick="addToItinerary('【暢遊首爾】韓服遊古宮、最美星巴克、高速巴士地下街、海洋列車4日')">加入行程清單</button>
+                                </div>
+                            </div>
                         </div>
-                        <div class="search-result-item">
-                            <input type="checkbox" class="form-check-input" id="result2">
-                            <label class="form-check-label" for="result2">【悠遊沖繩】海洋博水族館、玉泉洞大鼓秀、古宇利塔、贈單軌電車券四日遊</label>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingTwo">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                    <input type="checkbox" class="form-check-input me-2" id="compare2" value="【悠遊沖繩】海洋博水族館、玉泉洞大鼓秀、古宇利塔、贈單軌電車券四日遊">
+                                    【悠遊沖繩】海洋博水族館、玉泉洞大鼓秀、古宇利塔、贈單軌電車券四日遊
+                                </button>
+                            </h2>
+                            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo">
+                                <div class="accordion-body">
+                                    <strong>行程詳情：</strong> 放內容。
+                                    <button class="btn btn-secondary mt-3" onclick="addToItinerary('【悠遊沖繩】海洋博水族館、玉泉洞大鼓秀、古宇利塔、贈單軌電車券四日遊')">加入行程清單</button>
+                                </div>
+                            </div>
                         </div>
                         <!-- 更多搜尋結果 -->
                     </div>
-                    <button class="btn btn-secondary mt-3" onclick="addToItinerary()">加入行程清單</button>
+                    <br />
+                    <br />
+                    <button class="btn btn-primary" onclick="addToCompareList()">我要比價！</button>
                     <br />
                     <br />
                     <nav aria-label="Page navigation example">
                         <ul class="pagination">
                             <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Previous">
-                                <span aria-hidden="true">&laquo;</span>
-                            </a>
+                                <a class="page-link" href="#" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
                             </li>
                             <li class="page-item"><a class="page-link" href="#">1</a></li>
                             <li class="page-item"><a class="page-link" href="#">2</a></li>
                             <li class="page-item"><a class="page-link" href="#">3</a></li>
                             <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Next">
-                                <span aria-hidden="true">&raquo;</span>
-                            </a>
+                                <a class="page-link" href="#" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
                             </li>
                         </ul>
-                        </nav>
+                    </nav>
                 </div>
             </div>
         </div>
     </main>
-    <!-- 頁尾 -->
     <footer>
-        <!-- 聯絡資訊、社交媒體連結、快速連結等 -->
         <footer id="footer">
             <div class="container">
                 <div class="row">
-                    <!-- 網站地圖 -->
                     <div class="col-sm-2 box wow fadeIn">
                         <h3 class="title">Sitemap</h3>
                         <ul class="sitemap">
@@ -154,7 +165,6 @@
                             <li><a href="contact" draggable="false">聯絡我們</a></li>
                         </ul>
                     </div>
-                    <!-- 合作伙伴 -->
                     <div class="col-sm-2 box wow fadeIn">
                         <ul class="sitemap">
                             <div class="col-6">
@@ -164,7 +174,6 @@
                             <li><a href="/siteadmin/login.php" draggable="false">廠商專區</a></li>
                         </ul>
                     </div>
-                    <!-- 聯絡資訊 -->
                     <div class="col-sm-4 box wow fadeIn">
                         <h3 class="title">Connect</h3>
                         <ul class="connect">
@@ -176,7 +185,6 @@
                             <li><a href="mailto:relaxcom2016@gmail.com" draggable="false">宏碁碁旅遊@gmail.com</a></li>
                         </ul>
                     </div>
-                    <!-- 社交媒體連結 -->
                     <div class="col-sm-4 box wow fadeIn">
                         <h3 class="title">Follow Us</h3>
                         <ul class="share">
@@ -200,11 +208,8 @@
             <!--<div id="pageTop" class="wow fadeIn d5">Page Top</div>>-->
         </footer>
     </footer>
-    <!-- 引入 Bootstrap 的 JavaScript 功能 -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- 自定義 JavaScript -->
     <script>
-        // 搜尋行程功能
         function searchItinerary() {
             var selectedDays = [];
             document.querySelectorAll('input[type="checkbox"]:checked').forEach(function(checkbox) {
@@ -213,17 +218,24 @@
             var minPrice = document.getElementById("minPrice").value;
             var maxPrice = document.getElementById("maxPrice").value;
             alert("你選擇的天數是: " + selectedDays.join(', ') + "，價格範圍是: $" + minPrice + " ~ $" + maxPrice + "。");
-            // 在這裡可以添加處理搜尋行程的邏輯
         }
 
-        // 加入行程清單功能
-        function addToItinerary() {
+        function addToItinerary(itinerary) {
+            alert('已將 "' + itinerary + '" 加入行程清單。');
+            // 在這裡可以添加將行程加入清單的邏輯
+        }
+
+        function addToCompareList() {
             var selectedItineraries = [];
-            document.querySelectorAll('.search-result-item input[type="checkbox"]:checked').forEach(function(checkbox) {
-                selectedItineraries.push(checkbox.nextElementSibling.textContent);
+            document.querySelectorAll('input[type="checkbox"]:checked').forEach(function(checkbox) {
+                selectedItineraries.push(checkbox.value);
             });
-            alert("已加入以下行程到你的清單:\n" + selectedItineraries.join('\n'));
-            // 在這裡可以添加處理加入行程的邏輯
+            if (selectedItineraries.length > 0) {
+                alert('已將以下行程加入比價清單:\n' + selectedItineraries.join('\n'));
+                // 在這裡可以添加將行程加入比價清單的邏輯
+            } else {
+                alert('請先選擇要比價的行程。');
+            }
         }
     </script>
 </body>

@@ -1,0 +1,361 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>宏碁碁</title>
+    <!-- 引入 Bootstrap CSS 和 Font Awesome 圖標 -->
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <!-- 自定義 CSS 樣式 -->
+    <style>
+        body {
+            font-family: "微軟正黑體", Arial, "蘭亭黑 - 繁", "黑體 - 繁", sans-serif;
+            line-height: 1.7;
+            letter-spacing: 0.1em;
+            font-size: 16px;
+            font-weight: normal;
+            text-align: center;
+            background-color: #f0f0f0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: #333;
+            color: white;
+            padding: 10px 0;
+            z-index: 1000;
+        }
+
+        .navbar-nav {
+            flex-direction: row;
+            justify-content: center;
+        }
+
+        .navbar .nav-item {
+            margin: 0 15px;
+        }
+
+        .navbar .nav-link {
+            color: white;
+            text-decoration: none;
+        }
+
+        .navbar .nav-link:hover {
+            color: #337ab7;
+        }
+
+        .content {
+            margin-top: 60px;
+            padding: 20px;
+        }
+
+        main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .line-it-button {
+            margin-left: auto;
+        }
+
+        .calendar-wrapper {
+            flex: 1;
+            margin-right: 40px;
+        }
+
+        .title-container {
+            width: 505px;
+            margin: 0 auto;
+        }
+
+        .title-container h3 {
+            word-wrap: break-word;
+            white-space: normal;
+        }
+
+        .accordion-wrapper {
+            flex: 1;
+            margin-left: 40px;
+        }
+
+        .accordion-header {
+            width: 800px;
+            flex: 1;
+        }
+
+        .accordion-body {
+            width: 800px;
+            flex: 1;
+        }
+
+        .accordion-header button,
+        .accordion-body {
+            white-space: normal;
+            word-wrap: break-word;
+            text-align: left;
+        }
+
+        .custom-font {
+            font-size: 15px;
+            font-style: italic;
+            letter-spacing: 0.2em;
+            text-align: right; /* 調整成靠右對齊 */
+        }
+
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        #footer {
+            background-color: #f8f8f8;
+            padding: 20px 400px;
+            position: relative;
+        }
+
+        #footer .box {
+            margin-bottom: 20px;
+        }
+
+        #footer .title {
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+
+        #footer .sitemap,
+        #footer .connect,
+        #footer .share {
+            list-style: none;
+            padding: 0;
+        }
+
+        #footer .sitemap li,
+        #footer .connect li {
+            margin-bottom: 10px;
+        }
+
+        #footer .sitemap li a,
+        #footer .connect li a,
+        #footer .share li a {
+            color: #333;
+            text-decoration: none;
+        }
+
+        #footer .sitemap li a:hover,
+        #footer .connect li a:hover,
+        #footer .share li a:hover {
+            text-decoration: underline;
+        }
+
+        #footer .share li {
+            display: inline-block;
+            margin-right: 10px;
+        }
+
+        #footer .share li a {
+            color: #333;
+            font-size: 20px;
+            transition: color 0.3s ease;
+        }
+
+        #footer .share li a:hover {
+            color: #007bff;
+        }
+
+        #pageTop {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #pageTop:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <!-- 導航欄 -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <img src="https://i.pinimg.com/564x/e2/78/e4/e278e4e41ce6eba458deb27d36aeba36.jpg" alt="宏碁碁旅遊" width="50" height="50">
+                宏碁碁旅遊
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">關於我們</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            旅遊方案查詢
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">國內行程</a></li>
+                            <li><a class="dropdown-item" href="#">國外行程</a></li>
+                            <li><a class="dropdown-item" href="#">自由行</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">行程比價</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">個人行程規劃</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">會員中心</a></li>
+                </ul>
+                <div class="d-flex">
+                    <form class="d-flex me-2" role="search">
+                        <input class="form-control me-2" type="search" placeholder="關鍵字搜尋:日本" aria-label="Search">
+                        <button class="btn btn-outline-success" type="submit">Search</button>
+                    </form>
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                    Sign In
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <br></br>
+    <br></br>
+    <div>
+        <h2>我的行程清單<div class="line-it-button" data-lang="zh_Hant" data-type="share-a" data-env="REAL" data-url="https://developers.line.biz/zh-hant/docs/line-social-plugins/install-guide/using-line-share-buttons/#using-official-line-icons" data-color="default" data-size="large" data-count="false" data-ver="3" style="display: none;"></div></h2>
+    </div>
+    <!-- 主要內容區域 -->
+    <main>
+        <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+            <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
+            <label class="btn btn-outline-primary" for="btnradio1">一周內</label>
+
+            <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
+            <label class="btn btn-outline-primary" for="btnradio2">一個月內</label>
+
+            <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off">
+            <label class="btn btn-outline-primary" for="btnradio3">一年內</label>
+
+            <input type="radio" class="btn-check" name="btnradio" id="btnradio4" autocomplete="off">
+            <label class="btn btn-outline-primary" for="btnradio4">全部</label>
+
+            <input type="radio" class="btn-check" name="btnradio" id="btnradio5" autocomplete="off">
+            <label class="btn btn-outline-primary" for="btnradio5">自定義行程</label>
+        </div>
+        <div class="accordion accordion-flush" id="accordionFlush">
+            <div class="accordion-item">
+                <h2 class="accordion-header d-flex justify-content-between align-items-center" id="flush-headingOne">
+                    <button class="accordion-button collapsed flex-grow-1" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                        北海道．紫愛浪漫５日-函館山夜景、絢麗花海、企鵝遊行【千千】  
+                    </button>
+                    <button type="button" class="btn btn-danger btn-sm ms-auto" style="width: 120px; padding: 15px;">刪除行程</button>
+                </h2>
+                <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body">
+                        <strong>DAY1  </strong>桃園機場／千歲空港＞大雪山國立公園～層雲峽溫泉
+                        <div class="accordion-body custom-font">住宿:層雲峽朝陽 RESORT</div>
+                        <strong>DAY2  </strong>層雲峽溫泉＞銀河、流星瀑布＞（途經）美瑛拼布之路（在廣大地表上猶如波浪般披上拼花彩布的大自然完美拼圖）＞四季彩之丘（大人與小孩都喜歡的羊駝近距離接觸＋花田遊園車＋HERB GARDEN親手DIY製作薰衣草抱枕，加贈薰衣草冰淇淋一支）＞富田農場（感動度5顆星，薰衣草最代表性農場）＞千歲
+                        <div class="accordion-body custom-font">住宿:千歲 ANA 皇冠假日酒店</div>
+                        <strong>DAY3  </strong>飯店＞尼克斯海洋公園（北海道最大水族館，浪漫歐風建築，企鵝遊街）＞函館金森紅磚倉庫群＞★★★函館山百萬夜景（獲選米其林三星景點，搭乘來回纜車～觀賞世界三大之最美夜景，自然天成的弧線造型令人驚艷）＞函館
+                        <div class="accordion-body custom-font">住宿:湯元啄木亭</div>
+                        <strong>DAY4  </strong>飯店＞星形五陵郭城公園（日本第一座西洋式城堡）＞昭和新山＞免稅店＞札幌～大通公園、百貨公司或狸小路商店街散策
+                        <div class="accordion-body custom-font">住宿:札幌QUINTESSA飯店SUSUKINO</div>
+                        <strong>DAY5  </strong>飯店＞（路經）舊道廳＆時計台＞札幌市民的海鮮廚房～二条市場＞三井 OUTLET PARK 札幌北廣島＞新千歲機場／桃園機場
+                        <div class="accordion-body custom-font">住宿:溫暖的家</div>
+                    </div>
+                    <!--{% for day in itinerary %}
+                        <strong>{{ day.day }}</strong> {{ day.content }} <br>
+                    {% endfor %}-->
+                </div>
+            </div>
+        </div>
+    </main>
+    <!-- 頁尾 -->
+    <footer>
+        <!-- 聯絡資訊、社交媒體連結、快速連結等 -->
+        <footer id="footer">
+            <div class="container">
+                <div class="row">
+                    <!-- 網站地圖 -->
+                    <div class="col-sm-2 box wow fadeIn">
+                        <h3 class="title">Sitemap</h3>
+                        <ul class="sitemap">
+                            <li><a href="brand" draggable="false">關於宏碁碁旅遊</a></li>
+                            <li><a href="faq" draggable="false">常見問題</a></li>
+                            <li><a href="contact" draggable="false">聯絡我們</a></li>
+                        </ul>
+                    </div>
+                    <!-- 合作伙伴 -->
+                    <div class="col-sm-2 box wow fadeIn">
+                        <ul class="sitemap">
+                            <div class="col-6">
+                                <div class="p-3"></div>
+                            </div>
+                            <li><a href="agencies" draggable="false">合作伙伴</a></li>
+                            <li><a href="/siteadmin/login.php" draggable="false">廠商專區</a></li>
+                        </ul>
+                    </div>
+                    <!-- 聯絡資訊 -->
+                    <div class="col-sm-4 box wow fadeIn">
+                        <h3 class="title">Connect</h3>
+                        <ul class="connect">
+                            <li><a href="tel:04-36086935" draggable="false">04-123456（電話）</a></li>
+                            <li><a href="javascript:;" draggable="false">04-123456（傳真）</a></li>
+                            <li>
+                                <a href="https://www.google.com/maps/" class="gmap" draggable="false">聯成功館分校</a>
+                            </li>
+                            <li><a href="mailto:relaxcom2016@gmail.com" draggable="false">宏碁碁旅遊@gmail.com</a></li>
+                        </ul>
+                    </div>
+                    <!-- 社交媒體連結 -->
+                    <div class="col-sm-4 box wow fadeIn">
+                        <h3 class="title">Follow Us</h3>
+                        <ul class="share">
+                            <li>
+                                <a href="https://www.youtube.com/" target="_blank" class="icon icon-youtube" draggable="false"><span class="text-hide">Youtube</span></a>
+                            </li>
+                            <li>
+                                <a href="https://www.instagram.com/" target="_blank" class="icon icon-ig" draggable="false"><span class="text-hide">Instagram</span></a>
+                            </li>
+                            <li>
+                                <a href="https://www.facebook.com/" target="_blank" class="icon icon-fb" draggable="false"><span class="text-hide">Facebook</span></a>
+                            </li>
+                        </ul>
+                        <hr class="line">
+                        <p class="copyright">© 2024 宏碁碁旅遊 All Rights Reserved.<br>Designed by
+                            <a href="https://google.tw/" title="第一組" target="_blank" draggable="false">宏碁碁旅遊</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!--<div id="pageTop" class="wow fadeIn d5">Page Top</div>>-->
+        </footer>
+    </footer>
+    <div id="pageTop" onclick="scrollToTop()">Top</div>
+    <!-- 引入 Bootstrap 和 Font Awesome 的 JavaScript 文件 -->
+    <script src="js/bootstrap.bundle.js"></script>
+    <script>
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>

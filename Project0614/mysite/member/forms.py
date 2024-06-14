@@ -123,3 +123,13 @@ class ResetForm(forms.Form):
         username = self.cleaned_data.get("username")
 
         return username
+
+class ProfileForm(forms.Form):
+
+    email = forms.CharField(max_length = 50, label="email")
+
+    def clean_email(self):
+
+        email = self.cleaned_data.get('email')
+
+        return email

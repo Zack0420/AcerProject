@@ -206,7 +206,7 @@
     <main>
         <div class="login-container">
             <h2>個人資訊</h2>
-            <form action="/login" method="post">
+            <form action="{% url 'home'%}" method="post"> {% csrf_token %}
                 <div class="form-group">
                     <label for="username">帳號:</label>
                     <h3 id="username" name="username">{{username}} </h3>
@@ -216,8 +216,8 @@
                     <h3 id="email" name="email">{{email}}</h3>
                 </div>
                 <input type="button" id="editBtn" value="修改" onclick="enableEdit()">
-                <input type="submit" id="saveBtn" value="儲存" style="display:none;" onclick="saveChanges()">
-                <input type="submit" value="註銷帳號">
+                <input type="submit" id="saveBtn" value="儲存" style="display:none;" onclick="saveChanges()", formaction = "{% url 'savechange'%}" >
+                <input type="submit" value="註銷帳號" formaction = "{% url 'deleteaccount'%}">
             </form>
         </div>
     </main>

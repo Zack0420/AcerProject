@@ -20,6 +20,8 @@ urlpatterns = [
     url(r'^resetEmail/', views.sendResetEmail, name = "resetEmail"),
     url(r'^resetForm/(?P<username>.*)/', views.resetForm, name = "resetForm"),
     url(r'^reset/', views.reset, name = "reset"),
+    url(r'^saveChanged/', views.saveChanged, name = "savechange"),
+    url(r'^deleteaccount/', views.deleteAccount, name = "deleteaccount"),
 
 
 ]

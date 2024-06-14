@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import Member
-from member.forms import RegisterForm, LoginForm, ResetInfoForm, ResetForm
+from member.forms import RegisterForm, LoginForm, ResetInfoForm, ResetForm, ProfileForm
 from django.core.mail import EmailMultiAlternatives
 from django.http import HttpResponse
 
@@ -341,5 +341,40 @@ def reset(request):
         else:
 
             resetForm = ResetForm()
+
+    return redirect('logout')
+
+def saveChanged(request):
+
+    if request.method == "POST":
+
+        profileForm = ProfileForm(request.POST)
+
+        if profileForm.is_valid():
+
+            username = request.COOKIES['username']
+            email = profileForm.cleaned_data['email']
+
+            member = Member.objects.get(username = username)
+
+            member.email = email
+
+            member.save()
+
+            return redirect('profile')
+
+        else:
+
+            profileForm = ProfileForm()
+
+    else:
+
+        return redirect('profile')
+
+def deleteAccount(request):
+
+    username = request.COOKIES['username']
+    member = Member.objects.get(username = username)
+    Member.objects.get(id = member.id).delete()
 
     return redirect('logout')

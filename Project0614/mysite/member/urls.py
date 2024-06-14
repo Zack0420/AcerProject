@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path, include
-from member import views
+import member.views as views
 from django.urls import re_path as url
 from django.views.generic import TemplateView
 from member import tests
@@ -22,6 +22,6 @@ urlpatterns = [
     url(r'^reset/', views.reset, name = "reset"),
     url(r'^saveChanged/', views.saveChanged, name = "savechange"),
     url(r'^deleteaccount/', views.deleteAccount, name = "deleteaccount"),
-
+    url(r'^verifychangedemail/', views.verifyChangedEmail, name = "verifyChangedEmail"),
 
 ]

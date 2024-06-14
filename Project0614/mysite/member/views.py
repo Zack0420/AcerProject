@@ -358,10 +358,13 @@ def saveChanged(request):
             member = Member.objects.get(username = username)
 
             member.email = email
+            member.verification = 0
 
             member.save()
 
-            return redirect('profile')
+            sendEmail = redirect('verifyChangedEmail')
+            sendEmail.set_cookie('email', email)
+            return sendEmail
 
         else:
 
@@ -378,3 +381,27 @@ def deleteAccount(request):
     Member.objects.get(id = member.id).delete()
 
     return redirect('logout')
+
+def verifyChangedEmail(request):
+
+    if "email" in request.COOKIES and "username" in request.COOKIES:
+
+        emailto = request.COOKIES["email"]
+        username = request.COOKIES["username"]
+
+        subject, from_email, to = 'Welcome to app', 'han1010227@gmail.com', emailto
+        text_content = 'Verify your email!'
+        html_content = '<a href = "http://127.0.0.1:8000/member/change_verifiction_status/%s">Pleask click here to verify your email!</p>'%username
+        msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
+        msg.attach_alternative(html_content, "text/html")
+        msg.send()
+
+        response = redirect('profile')
+
+        response.delete_cookie("email")
+
+        return response
+
+    else:
+
+        return redirect('home')

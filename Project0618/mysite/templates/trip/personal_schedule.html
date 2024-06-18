@@ -1,0 +1,285 @@
+
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>第一旅遊/個人行程規劃</title>
+    <!-- 引入 Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+    <!-- 自定義 CSS 樣式 -->
+    <style>
+        body {
+            font-family: "微軟正黑體", Arial, sans-serif;
+            line-height: 1.7;
+            letter-spacing: 0.1em;
+            font-size: 16px;
+            background-color: #f0f0f0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: #333;
+            color: white;
+            padding: 10px 0;
+            z-index: 1000;
+        }
+
+        .navbar-nav {
+            flex-direction: row;
+            justify-content: center;
+        }
+
+        .navbar .nav-item {
+            margin: 0 15px;
+        }
+
+        .navbar .nav-link {
+            color: white;
+            text-decoration: none;
+        }
+
+        .navbar .nav-link:hover {
+            color: #337ab7;
+        }
+
+        .content {
+            margin-top: 60px;
+            padding: 20px;
+        }
+
+        main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            flex: 1;
+        }
+
+        .title-container h3 {
+            word-wrap: break-word;
+            white-space: normal;
+        }
+
+        .accordion-header, .accordion-body {
+            width: 800px;
+        }
+
+        .accordion-header button,
+        .accordion-body {
+            white-space: normal;
+            word-wrap: break-word;
+            text-align: left;
+        }
+
+        .custom-font {
+            font-size: 15px;
+            font-style: italic;
+            letter-spacing: 0.2em;
+            text-align: right;
+        }
+
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        #footer {
+            background-color: #333;
+            color: white;
+            padding: 40px 0;
+            position: relative;
+        }
+
+        #footer .title {
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+
+        #footer .sitemap li a,
+        #footer .connect li a,
+        #footer .share li a {
+            color: white;
+            text-decoration: none;
+        }
+
+        #footer .sitemap li a:hover,
+        #footer .connect li a:hover,
+        #footer .share li a:hover {
+            text-decoration: underline;
+        }
+
+        #footer .copyright {
+            font-size: 14px;
+            margin: 10px 0;
+            text-align: center;
+        }
+
+        #footer #pageTop {
+            font-size: 14px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <!-- 導航欄 -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <img src="https://i.pinimg.com/564x/e2/78/e4/e278e4e41ce6eba458deb27d36aeba36.jpg" alt="第一旅遊" width="50" height="50">
+                第一旅遊
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">關於我們</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">個人行程規劃</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">會員中心</a>
+                    </li>
+                </ul>
+                <form action="{% url 'logout'%}" method="post">{% csrf_token %}
+                    <Font size='4'>{{username}}</Font><input type="submit" value="登出">
+                </form>
+            </div>
+        </div>
+    </nav>
+    <br><br><br>
+    <!-- 主要內容區域 -->
+    <main>
+        <div class="top">
+            <h2>我的行程清單</h2>
+        </div>
+        <div class="middle">
+            <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                <form action = "{% url 'period_change'%}" method = "POST">{% csrf_token %}
+                    <input type="submit" class="btn-check" name="period" id="btnradio1" value="一周內">
+                    <label class="btn btn-outline-primary" for="btnradio1">一周內</label>
+
+                    <input type="submit" class="btn-check" name="period" id="btnradio2" value="一個月內">
+                    <label class="btn btn-outline-primary" for="btnradio2">一個月內</label>
+
+                    <input type="submit" class="btn-check" name="period" id="btnradio3" value="一年內">
+                    <label class="btn btn-outline-primary" for="btnradio3">一年內</label>
+
+                    <input type="submit" class="btn-check" name="period" id="btnradio4" value="全部">
+                    <label class="btn btn-outline-primary" for="btnradio4">全部</label>
+                </form>
+            </div>
+        </div>
+        <div class="bottom">
+            <div class="accordion accordion-flush" id="accordionFlush">
+                {% for plan in data %}
+                    <div class="accordion-item">
+                        <h2 class="accordion-header d-flex justify-content-between align-items-center" id="flush-heading{{ forloop.counter }}">
+                            
+                            <button class="accordion-button collapsed flex-grow-1" type="button" data-bs-toggle="collapse" data-bs-target="#flush-{{ forloop.counter }}" aria-expanded="false" aria-controls="flush-{{ forloop.counter }}">
+                                {{plan.title}}
+                            </button>
+                            <form action = "{% url 'user_save_delete'%}" method = "POST">{% csrf_token %}
+                                <input type = "hidden" name = "username" value = "{{plan.username}}">
+                                <input type = "hidden" name = "title" value = "{{plan.title}}">
+                                <input type = "hidden" name = "company" value = "{{plan.travel_company}}">
+                                <input type = "hidden" name = "date" value = "{{plan.date}}">
+                                <button type="submit" class="btn btn-danger btn-sm ms-auto" style="width: 120px; padding: 20px;">刪除行程</button>
+                                <button type="submit" class="btn btn-success btn-sm ms-auto" style="width: 120px; padding: 20px;" formaction = "{% url 'sendemail'%}">寄給自己</button>
+                            </form>
+                        </h2>
+                        <div id="flush-{{ forloop.counter }}" class="accordion-collapse collapse" aria-labelledby="flush-heading{{ forloop.counter }}" data-bs-parent="#accordionFlush">
+                            <div class="accordion-body">
+                                <strong>旅遊公司:</strong> {{plan.travel_company}}<br>
+                                <strong>旅遊地區:</strong> {{plan.area}}<br>
+                                <strong>出發日期:</strong> {{plan.date}}<br>
+                                <strong>天數:</strong> {{plan.duration}}天<br>
+                                <strong>出發城市:</strong> {{plan.departure_city}}<br>
+                                <strong>行程價錢:</strong> {{plan.price}}<br>
+                                <strong>剩餘名額:</strong> {{plan.remaining_quota}}<br>
+                                <a href="{{plan.url}}" target="_blank">點我獲取更多內容!</a> <br>
+                                {% for day in plan.days %}
+                                    <strong>{{day.day}}:</strong><br>
+                                    <strong>行程:</strong><br>
+                                    {% for s in day.schedule %}
+                                        
+                                        {% if forloop.last %}
+                                            {{s}}
+                                        {% else %}
+                                            {{s}}->
+                                        {% endif %}
+                                    {%endfor%}
+                                    <br>
+                                    <strong>酒店列表:</strong><br>
+                                    {% for h in day.hotel %}
+                                        
+                                        {% if forloop.last %}
+                                            {{h}}
+                                        {%else%}
+                                            {{h}}->
+                                        {% endif %}
+                                    {%endfor%}
+                                    <br>
+                                {%endfor%}
+                            </div>
+                        </div>
+                    </div>
+                {%endfor%}
+            </div>
+        </div>
+    </main>
+    <!-- 頁腳 -->
+    <footer id="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 sitemap">
+                    <div class="title">Sitemap</div>
+                    <ul>
+                        <li><a href="#">關於我們</a></li>
+                        <li><a href="#">旅遊方案查詢</a></li>
+                        <li><a href="#">個人行程規劃</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 connect">
+                    <div class="title">Connect</div>
+                    <ul>
+                        <li><a href="#">聯絡我們</a></li>
+                        <li><a href="#">網站地圖</a></li>
+                        <li><a href="#">常見問題</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 share">
+                    <div class="title">Follow Us</div>
+                    <ul>
+                        <li><a href="#">Facebook</a></li>
+                        <li><a href="#">Instagram</a></li>
+                        <li><a href="#">Twitter</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 text-center">
+                    <div class="copyright">&copy; 2024 第一旅遊. All rights reserved.</div>
+                    <div id="pageTop">回到頁頂</div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 引入 Bootstrap JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8" crossorigin="anonymous"></script>
+
+</body>
+</html>

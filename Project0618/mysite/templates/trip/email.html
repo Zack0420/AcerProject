@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>第一旅遊/個人行程規劃</title>
+    <!-- 引入 Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+    <!-- 自定義 CSS 樣式 -->
+    <style>
+        body {
+            font-family: "微軟正黑體", Arial, sans-serif;
+            line-height: 1.7;
+            letter-spacing: 0.1em;
+            font-size: 16px;
+            background-color: #f0f0f0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: #333;
+            color: white;
+            padding: 10px 0;
+            z-index: 1000;
+        }
+
+        .navbar-nav {
+            flex-direction: row;
+            justify-content: center;
+        }
+
+        .navbar .nav-item {
+            margin: 0 15px;
+        }
+
+        .navbar .nav-link {
+            color: white;
+            text-decoration: none;
+        }
+
+        .navbar .nav-link:hover {
+            color: #337ab7;
+        }
+
+        .content {
+            margin-top: 60px;
+            padding: 20px;
+        }
+
+        main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            flex: 1;
+        }
+
+        .title-container h3 {
+            word-wrap: break-word;
+            white-space: normal;
+        }
+
+        .accordion-header, .accordion-body {
+            width: 800px;
+        }
+
+        .accordion-header button,
+        .accordion-body {
+            white-space: normal;
+            word-wrap: break-word;
+            text-align: left;
+        }
+
+        .custom-font {
+            font-size: 15px;
+            font-style: italic;
+            letter-spacing: 0.2em;
+            text-align: right;
+        }
+
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        #footer {
+            background-color: #333;
+            color: white;
+            padding: 40px 0;
+            position: relative;
+        }
+
+        #footer .title {
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+
+        #footer .sitemap li a,
+        #footer .connect li a,
+        #footer .share li a {
+            color: white;
+            text-decoration: none;
+        }
+
+        #footer .sitemap li a:hover,
+        #footer .connect li a:hover,
+        #footer .share li a:hover {
+            text-decoration: underline;
+        }
+
+        #footer .copyright {
+            font-size: 14px;
+            margin: 10px 0;
+            text-align: center;
+        }
+
+        #footer #pageTop {
+            font-size: 14px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <strong>行程標題:</strong>  {{plan.title}}<br>
+        <strong>旅遊公司:</strong> {{plan.travel_company}}<br>
+        <strong>旅遊地區:</strong> {{plan.area}}<br>
+        <strong>出發日期:</strong> {{plan.date}}<br>
+        <strong>天數:</strong> {{plan.duration}}天<br>
+        <strong>出發城市:</strong> {{plan.departure_city}}<br>
+        <strong>行程價錢:</strong> {{plan.price}}<br>
+        <strong>剩餘名額:</strong> {{plan.remaining_quota}}<br>
+        <a href="{{plan.url}}" target="_blank">點我獲取更多內容!</a> <br>
+        {% for day in plan.days %}
+            <strong>{{day.day}}:</strong><br>
+            <strong>行程:</strong><br>
+            {% for s in day.schedule %}
+                
+                {% if forloop.last %}
+                    {{s}}
+                {% else %}
+                    {{s}}->
+                {% endif %}
+            {%endfor%}
+            <br>
+            <strong>酒店列表:</strong><br>
+            {% for h in day.hotel %}
+                
+                {% if forloop.last %}
+                    {{h}}
+                {%else%}
+                    {{h}}->
+                {% endif %}
+            {%endfor%}
+            <br>
+        {%endfor%}
+    </main>
+    <!-- 頁腳 -->
+    <!-- 引入 Bootstrap JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8" crossorigin="anonymous"></script>
+</body>
+</html>
